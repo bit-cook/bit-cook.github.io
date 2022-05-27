@@ -1,7 +1,7 @@
 ## About Contropist
 
-[Github](https://github.com/contropist)
+[My Github](https://github.com/contropist)
 
-[Twitter](https://twitter.com/contropist)
+[My Twitter](https://twitter.com/contropist)
 
-[Telegram](http://t.me/contropist)
+[My Telegram](http://t.me/contropist)
