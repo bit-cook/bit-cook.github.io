@@ -1,6 +1,6 @@
 ## About Contropist
 
-[My Web Business Card](http://g.ee.ke)
+[My Web Visiting Card](http://g.ee.ke)
 
 [My Twitter](https://twitter.com/contropist)
 
