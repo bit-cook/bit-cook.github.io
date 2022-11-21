@@ -1,4 +1,3 @@
-# Contropist
 ## About Contropist
 
 [My Web Visiting Card](http://g.ee.ke)
