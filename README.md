@@ -1,9 +1,9 @@
-## About Contropist
+## About BitCook
 
 [My Web Visiting Card](http://g.ee.ke)
 
-[My Twitter](https://twitter.com/contropist)
+[My X/Twitter](https://x.com/bit_cook))
 
-[My Telegram](http://t.me/contropist)
+[My Telegram](http://t.me/bit_cook)
 
-[My Github](https://github.com/contropist)
+[My Github](https://github.com/bit-cook)
