@@ -2,7 +2,7 @@
 
 [My Web Visiting Card](http://g.ee.ke)
 
-[My X/Twitter](https://x.com/bit_cook))
+[My X/Twitter](https://x.com/bit_cook)
 
 [My Telegram](http://t.me/bit_cook)
 
