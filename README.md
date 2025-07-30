@@ -1,5 +1,7 @@
 ## About BitCook
 
+[My Blog](http://www.bitcook.org)
+
 [My Web Visiting Card](http://g.ee.ke)
 
 [My X/Twitter](https://x.com/bit_cook)
