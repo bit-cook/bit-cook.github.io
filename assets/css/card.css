@@ -465,7 +465,7 @@ button {
   .card-footer {
     height: auto;
     min-height: 82px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 0;
     row-gap: 1rem;
     padding-top: 1.25rem;
@@ -476,14 +476,11 @@ button {
   }
   .card-footer p {
     margin: 0;
-  }
-  .card-footer p:nth-child(2) {
-    text-align: right;
+    width: 100%;
+    text-align: center !important;
   }
   .card-footer p:last-child {
-    grid-column: 1 / -1;
-    text-align: left;
-    width: 100%;
+    grid-column: auto;
     padding-top: 0.85rem;
     border-top: 1px solid var(--line);
     color: var(--accent);
