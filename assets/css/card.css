@@ -466,10 +466,13 @@ button {
     height: auto;
     min-height: 82px;
     grid-template-columns: 1fr 1fr;
-    gap: 0.35rem;
-    padding-top: 1.35rem;
+    gap: 0;
+    row-gap: 1rem;
+    padding-top: 1.25rem;
     padding-bottom: max(1.35rem, env(safe-area-inset-bottom));
     border-top-color: var(--line);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
   }
   .card-footer p {
     margin: 0;
@@ -480,6 +483,12 @@ button {
   .card-footer p:last-child {
     grid-column: 1 / -1;
     text-align: left;
+    width: 100%;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--line);
+    color: var(--accent);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
   }
 }
 @media (max-width: 350px) {
