@@ -16,4 +16,20 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://osome.work/workshop/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://osome.work/workshop/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osome.work/workshop/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osome.work/workshop/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://osome.work/workshop/en/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://osome.work/workshop/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osome.work/workshop/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osome.work/workshop/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

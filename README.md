@@ -1,11 +1,13 @@
 # osome.work
 
-BitCook's bilingual personal site, built as a dependency-free static website and deployed with GitHub Pages.
+BitCook's bilingual personal card and the osome.work digital workshop, built as a dependency-free static website and deployed with GitHub Pages.
 
 ## Structure
 
 - `/` - Simplified Chinese
 - `/en/` - English
+- `/workshop/` - osome.work workshop in Simplified Chinese
+- `/workshop/en/` - osome.work workshop in English
 - `/assets/` - Shared styles, scripts, and images
 
 ## Local preview

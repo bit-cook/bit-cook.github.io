@@ -1,9 +1,9 @@
-name: Deploy site with temporary runner
+name: Deploy site
 
 on:
-  workflow_dispatch:
   push:
     branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, osome-temp]
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

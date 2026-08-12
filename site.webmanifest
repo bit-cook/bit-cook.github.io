@@ -1,7 +1,7 @@
 {
   "name": "BitCook Digital Workshop",
   "short_name": "BitCook",
-  "description": "Handcrafted Story Maker. Next-Generation Magician.",
+  "description": "BitCook's personal card and digital workshop.",
   "lang": "zh-CN",
   "start_url": "/",
   "scope": "/",
