@@ -156,26 +156,13 @@ button {
     0;
   border-right: 1px solid var(--line);
 }
-.signal,
 .directory-label {
   color: var(--muted);
   font: 0.75rem var(--mono);
   letter-spacing: 0.13em;
 }
-.signal {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-.signal span {
-  width: 0.48rem;
-  height: 0.48rem;
-  border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 0 0.24rem color-mix(in srgb, var(--lime) 15%, transparent);
-}
 .intro {
-  margin: clamp(3rem, 7vh, 5rem) 0 0.3rem;
+  margin: 0 0 0.3rem;
   color: var(--muted);
   font-size: clamp(1rem, 1.5vw, 1.3rem);
 }
@@ -207,35 +194,6 @@ button {
   margin: 1.5rem 0 0;
   color: var(--muted);
   line-height: 1.85;
-}
-.contact {
-  width: min(100%, 24rem);
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 3rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--line);
-  font: 0.75rem var(--mono);
-  text-transform: uppercase;
-  transition:
-    transform 0.2s,
-    background 0.2s,
-    color 0.2s;
-}
-.contact strong {
-  color: var(--accent);
-  font-weight: 500;
-}
-.contact i {
-  font-style: normal;
-  font-size: 1rem;
-}
-.contact:hover {
-  transform: translateY(-3px);
-  background: var(--ink);
-  color: var(--bg);
 }
 .directory {
   align-self: center;
@@ -358,17 +316,11 @@ button {
     font-size: clamp(4.35rem, 22vw, 6.2rem);
     letter-spacing: -0.055em;
   }
-  .intro {
-    margin-top: 3rem;
-  }
   .role {
     margin-top: 1.5rem;
   }
   .bio br {
     display: none;
-  }
-  .contact {
-    margin-top: 2.3rem;
   }
   .directory {
     padding-block: 4rem;
@@ -418,7 +370,6 @@ button {
   }
 }
 @media (hover: none) {
-  .contact:active,
   .link-list > a:active {
     background: var(--panel);
     transform: scale(0.99);
