@@ -97,7 +97,7 @@ button {
   margin-inline: auto;
 }
 .card-header {
-  height: 92px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -144,7 +144,8 @@ button {
   border-color: var(--ink);
 }
 .card-shell {
-  min-height: calc(100svh - 176px);
+  height: calc(100svh - 128px);
+  min-height: 520px;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
 }
@@ -152,8 +153,8 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(4rem, 8vw, 8rem) clamp(2rem, 7vw, 7rem) clamp(4rem, 8vw, 8rem)
-    0;
+  padding: clamp(2.5rem, 6vh, 5rem) clamp(2rem, 7vw, 7rem)
+    clamp(2.5rem, 6vh, 5rem) 0;
   border-right: 1px solid var(--line);
 }
 .directory-label {
@@ -168,7 +169,7 @@ button {
 }
 .identity h1 {
   margin: 0;
-  font: 900 clamp(5.7rem, 12vw, 11.5rem) / 0.83 var(--display);
+  font: 900 clamp(5.7rem, 10vw, 9.5rem) / 0.83 var(--display);
   text-transform: uppercase;
   letter-spacing: -0.045em;
   white-space: nowrap;
@@ -177,7 +178,7 @@ button {
   color: var(--accent);
 }
 .role {
-  margin: 2rem 0 0;
+  margin: clamp(1.25rem, 2.5vh, 2rem) 0 0;
   font-size: clamp(1.3rem, 2.3vw, 2.1rem);
   font-weight: 650;
   line-height: 1.35;
@@ -191,17 +192,17 @@ button {
 }
 .bio {
   max-width: 39rem;
-  margin: 1.5rem 0 0;
+  margin: clamp(1rem, 2vh, 1.5rem) 0 0;
   color: var(--muted);
   line-height: 1.85;
 }
 .directory {
   align-self: center;
-  padding: clamp(3rem, 6vw, 6rem) 0 clamp(3rem, 6vw, 6rem)
+  padding: clamp(1.5rem, 3vh, 2.5rem) 0 clamp(1.5rem, 3vh, 2.5rem)
     clamp(2rem, 7vw, 7rem);
 }
 .directory-label {
-  margin: 0 0 1.4rem;
+  margin: 0 0 clamp(0.75rem, 1.5vh, 1.25rem);
 }
 .link-list {
   border-top: 1px solid var(--line);
@@ -211,7 +212,7 @@ button {
   grid-template-columns: 2.5rem 1fr auto;
   gap: 1rem;
   align-items: center;
-  padding: clamp(1.1rem, 2.2vh, 1.65rem) 0;
+  padding: clamp(0.7rem, 1.35vh, 1.15rem) 0;
   border-bottom: 1px solid var(--line);
   transition:
     padding 0.25s,
@@ -247,7 +248,7 @@ button {
   font-size: 1.1rem;
 }
 .link-list .workshop-link {
-  margin-top: 1.1rem;
+  margin-top: clamp(0.65rem, 1.3vh, 1rem);
   padding-inline: 1rem;
   border: 1px solid var(--accent);
   color: var(--ink);
@@ -263,7 +264,7 @@ button {
   opacity: 0.65;
 }
 .card-footer {
-  height: 84px;
+  height: 56px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
@@ -281,10 +282,12 @@ button {
 }
 @media (max-width: 900px) {
   .card-shell {
+    height: auto;
+    min-height: 0;
     grid-template-columns: 1fr;
   }
   .identity {
-    min-height: calc(100svh - 92px);
+    min-height: min(640px, calc(100svh - 72px));
     padding-right: 0;
     border-right: 0;
     border-bottom: 1px solid var(--line);
@@ -309,7 +312,7 @@ button {
     height: 1.7rem;
   }
   .identity {
-    min-height: calc(100svh - 72px);
+    min-height: min(640px, calc(100svh - 72px));
     padding-block: clamp(2.5rem, 7vh, 4.5rem);
   }
   .identity h1 {
@@ -323,7 +326,7 @@ button {
     display: none;
   }
   .directory {
-    padding-block: 4rem;
+    padding-block: clamp(2.75rem, 8vw, 4rem);
   }
   .link-list > a {
     grid-template-columns: 2rem 1fr auto;
