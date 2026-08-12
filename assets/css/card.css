@@ -190,6 +190,12 @@ button {
   line-height: 1.35;
   letter-spacing: -0.02em;
 }
+.alias {
+  margin: 0.8rem 0 0;
+  color: var(--accent);
+  font: 0.64rem var(--mono);
+  letter-spacing: 0.14em;
+}
 .bio {
   max-width: 39rem;
   margin: 1.5rem 0 0;

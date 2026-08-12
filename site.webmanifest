@@ -1,7 +1,7 @@
 {
-  "name": "BitCook Digital Workshop",
-  "short_name": "BitCook",
-  "description": "BitCook's personal card and digital workshop.",
+  "name": "Shaun's Personal Card and osome.work",
+  "short_name": "Shaun",
+  "description": "Shaun's personal card and the osome.work digital workshop.",
   "lang": "zh-CN",
   "start_url": "/",
   "scope": "/",

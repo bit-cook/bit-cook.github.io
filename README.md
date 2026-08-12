@@ -1,6 +1,6 @@
 # osome.work
 
-BitCook's bilingual personal card and the osome.work digital workshop, built as a dependency-free static website and deployed with GitHub Pages.
+Shaun's bilingual personal card (online as BitCook) and the osome.work digital workshop, built as a dependency-free static website and deployed with GitHub Pages.
 
 ## Structure
 
