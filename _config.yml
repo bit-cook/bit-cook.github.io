@@ -1,1 +1,13 @@
-theme: jekyll-theme-time-machine
+title: BitCook
+description: Handcrafted Story Maker. Next-Generation Magician.
+url: https://osome.work
+lang: zh-CN
+timezone: Asia/Shanghai
+
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

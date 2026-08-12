@@ -1,0 +1,27 @@
+name: Site quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate HTML
+        run: npx --yes html-validate@10.4.0 "index.html" "en/index.html" "404.html"
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-mail
+            --exclude 'osome\.work'
+            --accept 200,204,301,302,307,308,403,429
+            './**/*.html'
+          fail: true
