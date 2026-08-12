@@ -307,37 +307,130 @@ button {
     position: relative;
     z-index: 2;
   }
+  .mark {
+    letter-spacing: 0.08em;
+  }
   .mark svg {
     width: 1.7rem;
     height: 1.7rem;
   }
   .identity {
-    min-height: min(640px, calc(100svh - 72px));
-    padding-block: clamp(2.5rem, 7vh, 4.5rem);
+    min-height: auto;
+    padding-block: clamp(3.5rem, 11vw, 5rem);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .identity::after {
+    content: "S";
+    position: absolute;
+    z-index: -1;
+    right: -0.08em;
+    bottom: -0.18em;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line);
+    font: 900 clamp(13rem, 72vw, 20rem) / 1 var(--display);
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .intro {
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
   }
   .identity h1 {
     font-size: clamp(4.35rem, 22vw, 6.2rem);
     letter-spacing: -0.055em;
+    margin-top: 0.15rem;
   }
   .role {
-    margin-top: 1.5rem;
+    width: fit-content;
+    margin-top: 1.75rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+    font-size: clamp(1.2rem, 5.6vw, 1.55rem);
+    line-height: 1.4;
+  }
+  .alias {
+    margin-top: 1rem;
+    padding-left: 1.15rem;
   }
   .bio br {
     display: none;
   }
+  .bio {
+    max-width: 31rem;
+    margin-top: 1.75rem;
+    padding-right: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
   .directory {
-    padding-block: clamp(2.75rem, 8vw, 4rem);
+    padding-block: clamp(3rem, 10vw, 4.5rem);
+  }
+  .directory-label {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.7rem;
+  }
+  .directory-label::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid var(--line);
+  }
+  .link-list {
+    display: grid;
+    gap: 0.65rem;
+    border-top: 0;
   }
   .link-list > a {
-    grid-template-columns: 2rem 1fr auto;
-    min-height: 4.75rem;
+    grid-template-columns: 2.15rem minmax(0, 1fr) 1.5rem;
+    min-height: 5.15rem;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--panel) 72%, transparent);
+  }
+  .link-list > a:hover {
+    padding-left: 1rem;
+  }
+  .link-list .number {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    padding-top: 0;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    font-size: 0.62rem;
+  }
+  .link-list strong {
+    font-size: clamp(1.15rem, 5vw, 1.4rem);
+  }
+  .link-list small {
+    overflow-wrap: anywhere;
+  }
+  .link-list i {
+    display: grid;
+    place-items: center;
+  }
+  .link-list .workshop-link {
+    margin-top: 0.45rem;
+    padding-inline: 1rem;
+    background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  }
+  .link-list .workshop-link:hover {
+    padding-left: 1rem;
   }
   .card-footer {
     height: auto;
     min-height: 82px;
     grid-template-columns: 1fr 1fr;
     gap: 0.35rem;
-    padding-block: 1.2rem;
+    padding-block: 1.35rem;
+    border-top-color: var(--line);
   }
   .card-footer p {
     margin: 0;
@@ -368,8 +461,17 @@ button {
     height: 2.25rem;
   }
   .link-list > a {
-    grid-template-columns: 1.7rem 1fr auto;
-    gap: 0.65rem;
+    grid-template-columns: 1.8rem minmax(0, 1fr) 1.25rem;
+    gap: 0.6rem;
+    padding-inline: 0.75rem;
+  }
+  .link-list .number {
+    width: 1.55rem;
+    height: 1.55rem;
+  }
+  .link-list .workshop-link,
+  .link-list .workshop-link:hover {
+    padding-inline: 0.75rem;
   }
 }
 @media (hover: none) {
