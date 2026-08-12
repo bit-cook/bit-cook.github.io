@@ -106,15 +106,18 @@ button {
 .mark {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.7rem;
   font-family: var(--display);
   letter-spacing: 0.06em;
 }
 .mark svg {
-  width: 2rem;
-  height: 2rem;
+  width: 2.15rem;
+  height: 2.15rem;
   color: var(--accent);
   fill: var(--accent);
+  filter: drop-shadow(
+    0 0.3rem 0.8rem color-mix(in srgb, var(--accent) 18%, transparent)
+  );
 }
 .card-header nav {
   display: flex;
@@ -312,8 +315,8 @@ button {
     letter-spacing: 0.08em;
   }
   .mark svg {
-    width: 1.7rem;
-    height: 1.7rem;
+    width: 1.85rem;
+    height: 1.85rem;
   }
   .identity {
     min-height: auto;
