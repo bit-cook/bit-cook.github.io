@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,8 +8,14 @@
       name="description"
       content="osome.work 数字工坊：由 Shaun（网络 ID：BitCook）创建，探索 AI Agent、开放技术与自我书写的实验项目。"
     />
-    <meta name="theme-color" content="#11100e" />
+    <meta name="theme-color" content="#fffaf0" />
     <meta name="color-scheme" content="dark light" />
+    <script>
+      document.documentElement.dataset.theme =
+        new Date().getHours() >= 7 && new Date().getHours() < 19
+          ? "light"
+          : "dark";
+    </script>
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <link rel="canonical" href="https://osome.work/workshop/" />
     <link
@@ -95,8 +101,14 @@
         <a href="#about">关于</a><a href="#projects">项目</a
         ><a href="#connect">连接</a>
         <a class="language" href="/workshop/en/" lang="en" hreflang="en">EN</a>
-        <button class="theme-toggle" type="button" aria-label="切换明暗主题">
-          <span aria-hidden="true">◐</span>
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-label="切换明暗主题"
+          data-light-label="当前为亮色，切换到暗色"
+          data-dark-label="当前为暗色，切换到亮色"
+        >
+          <span aria-hidden="true">☀</span>
         </button>
       </nav>
     </header>

@@ -2,26 +2,44 @@
   const root = document.documentElement;
   const themeButton = document.querySelector(".theme-toggle");
   const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const savedTheme = localStorage.getItem("theme");
-  const preferredTheme = matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark";
+  let manualTheme = false;
+
+  function getTimeTheme() {
+    const hour = new Date().getHours();
+    return hour >= 7 && hour < 19 ? "light" : "dark";
+  }
 
   function setTheme(theme) {
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
     themeMeta?.setAttribute(
       "content",
-      theme === "dark" ? "#11100e" : "#f3efe5",
+      theme === "dark" ? "#11100e" : "#fffaf0",
+    );
+    const icon = themeButton?.querySelector("span");
+    if (icon) icon.textContent = theme === "dark" ? "☾" : "☀";
+    themeButton?.setAttribute(
+      "aria-label",
+      theme === "dark"
+        ? themeButton.dataset.darkLabel
+        : themeButton.dataset.lightLabel,
     );
   }
 
-  setTheme(savedTheme || preferredTheme);
+  setTheme(getTimeTheme());
   themeButton?.addEventListener("click", () => {
     const theme = root.dataset.theme === "dark" ? "light" : "dark";
+    manualTheme = true;
     setTheme(theme);
-    localStorage.setItem("theme", theme);
   });
+
+  window.setInterval(() => {
+    const timeTheme = getTimeTheme();
+    if (timeTheme !== root.dataset.timeTheme) manualTheme = false;
+    root.dataset.timeTheme = timeTheme;
+    if (!manualTheme) setTheme(timeTheme);
+  }, 60_000);
+  root.dataset.timeTheme = getTimeTheme();
 
   const menuButton = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".site-nav");

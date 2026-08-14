@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,8 +8,14 @@
       name="description"
       content="osome.work is a digital workshop created by Shaun, online as BitCook, for AI agents, open technology, and self-writing experiments."
     />
-    <meta name="theme-color" content="#11100e" />
+    <meta name="theme-color" content="#fffaf0" />
     <meta name="color-scheme" content="dark light" />
+    <script>
+      document.documentElement.dataset.theme =
+        new Date().getHours() >= 7 && new Date().getHours() < 19
+          ? "light"
+          : "dark";
+    </script>
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <link rel="canonical" href="https://osome.work/workshop/en/" />
     <link
@@ -101,8 +107,10 @@
           class="theme-toggle"
           type="button"
           aria-label="Toggle color theme"
+          data-light-label="Light theme active; switch to dark"
+          data-dark-label="Dark theme active; switch to light"
         >
-          <span aria-hidden="true">◐</span>
+          <span aria-hidden="true">☀</span>
         </button>
       </nav>
     </header>

@@ -2,6 +2,18 @@
 
 All notable visual and interaction changes to osome.work are documented here.
 
+## Workshop v2.1 - 2026-08-14
+
+### Changed
+
+- Made the optimistic warm-light palette the daytime default.
+- Added automatic local-time theming: light from 07:00 through 18:59 and dark
+  from 19:00 through 06:59 in the visitor's device timezone.
+- Kept manual theme switching available for the current visit without storing
+  a permanent override.
+- Kept the signal banner dark in both themes and preserved its continuous
+  motion alongside the animated hero orbits.
+
 ## Workshop v2 - 2026-08-14
 
 ### Changed

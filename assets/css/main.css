@@ -1,11 +1,11 @@
 :root {
-  --ink: #f0eadf;
-  --muted: #9d988f;
-  --surface: #11100e;
-  --surface-2: #191714;
-  --line: #35312b;
-  --accent: #ff5b35;
-  --hot: #ffb000;
+  --ink: #201b16;
+  --muted: #74685c;
+  --surface: #fffaf0;
+  --surface-2: #fff1d8;
+  --line: #d9cbb8;
+  --accent: #d23820;
+  --hot: #f5a800;
   --max: 1440px;
   --pad: clamp(1.25rem, 4vw, 4.5rem);
   --display: Impact, "Arial Narrow", Arial, sans-serif;
@@ -14,14 +14,14 @@
     "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
-[data-theme="light"] {
-  --ink: #181511;
-  --muted: #69635a;
-  --surface: #f3efe5;
-  --surface-2: #e9e2d5;
-  --line: #c9c0b2;
-  --accent: #b83218;
-  --hot: #c77d00;
+[data-theme="dark"] {
+  --ink: #f4eee3;
+  --muted: #a9a197;
+  --surface: #11100e;
+  --surface-2: #1c1915;
+  --line: #3a352e;
+  --accent: #ff6542;
+  --hot: #ffb51b;
 }
 * {
   box-sizing: border-box;
@@ -39,10 +39,15 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   background-image: radial-gradient(
-    circle at 75% 8%,
-    color-mix(in srgb, var(--accent) 7%, transparent),
-    transparent 30rem
-  );
+      circle at 78% 6%,
+      color-mix(in srgb, var(--hot) 14%, transparent),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 8% 38%,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent 26rem
+    );
 }
 ::selection {
   color: #fff;
@@ -179,6 +184,8 @@ button {
   cursor: pointer;
   font-size: 1.1rem;
   border-radius: 50%;
+  display: grid;
+  place-items: center;
   transition:
     color 0.2s,
     background 0.2s,
@@ -188,6 +195,14 @@ button {
   color: var(--accent);
   background: var(--surface-2);
   transform: rotate(180deg);
+}
+.theme-toggle span {
+  display: block;
+  line-height: 1;
+  transition: transform 0.35s;
+}
+[data-theme="dark"] .theme-toggle span {
+  transform: rotate(-25deg);
 }
 .menu-toggle {
   display: none;
@@ -357,8 +372,8 @@ main,
   width: 68%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.08;
+  background: linear-gradient(135deg, var(--hot), var(--accent));
+  opacity: 0.12;
   filter: blur(4rem);
   animation: breathe 5s ease-in-out infinite;
 }
@@ -508,8 +523,8 @@ main,
 .signal-band {
   overflow: hidden;
   border-bottom: 1px solid var(--line);
-  background: var(--ink);
-  color: var(--surface);
+  background: #17130f;
+  color: #fff9ee;
 }
 .signal-track {
   display: flex;
@@ -530,7 +545,7 @@ main,
 }
 .signal-track i {
   margin: 0 clamp(1.4rem, 3vw, 3rem);
-  color: var(--accent);
+  color: #ffb51b;
   font-style: normal;
   font-size: 0.7rem;
 }
