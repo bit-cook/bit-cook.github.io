@@ -25,6 +25,7 @@
 
   const menuButton = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".site-nav");
+  const header = document.querySelector(".site-header");
   menuButton?.addEventListener("click", () => {
     const open = menuButton.getAttribute("aria-expanded") === "true";
     menuButton.setAttribute("aria-expanded", String(!open));
@@ -36,6 +37,12 @@
       nav.classList.remove("is-open");
     }
   });
+
+  const updateHeader = () => {
+    header?.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
 
   document.querySelectorAll("[data-year]").forEach((element) => {
     element.textContent = new Date().getFullYear();
