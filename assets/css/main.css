@@ -444,20 +444,31 @@ main,
     0 0 0 0.3rem color-mix(in srgb, var(--hot) 12%, transparent),
     0 0 1.5rem var(--hot);
 }
+.orbit:before {
+  content: "";
+  position: absolute;
+  width: 0.28rem;
+  height: 0.28rem;
+  right: 13%;
+  bottom: 14%;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 1rem var(--accent);
+}
 .orbit-one {
   width: 82%;
   aspect-ratio: 1;
-  animation: spin 18s linear infinite;
+  animation: spin 10s linear infinite;
 }
 .orbit-two {
   width: 57%;
   aspect-ratio: 1;
-  animation: spin 12s linear infinite reverse;
+  animation: spin 7s linear infinite reverse;
 }
 .orbit-three {
   width: 35%;
   aspect-ratio: 1;
-  animation: spin 8s linear infinite;
+  animation: spin 5s linear infinite;
   opacity: 0.72;
 }
 .orbit-three:after {
@@ -531,11 +542,8 @@ main,
   align-items: center;
   width: max-content;
   padding: 0.72rem 0;
-  animation: marquee 28s linear infinite;
+  animation: marquee 16s linear infinite;
   will-change: transform;
-}
-.signal-band:hover .signal-track {
-  animation-play-state: paused;
 }
 .signal-track span {
   white-space: nowrap;
@@ -1144,6 +1152,30 @@ main,
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .hero-art svg {
+    animation-duration: 7s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .hero-art svg circle:first-of-type {
+    animation-duration: 10s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .orbit-one {
+    animation-duration: 10s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .orbit-two {
+    animation-duration: 7s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .orbit-three {
+    animation-duration: 5s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .signal-track {
+    animation-duration: 16s !important;
+    animation-iteration-count: infinite !important;
   }
 }
 @media print {

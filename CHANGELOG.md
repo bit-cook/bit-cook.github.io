@@ -2,6 +2,17 @@
 
 All notable visual and interaction changes to osome.work are documented here.
 
+## Workshop v2.2 - 2026-08-14
+
+### Fixed
+
+- Kept the hero signal and ticker moving when a device reports reduced-motion,
+  because these are essential requested features rather than decorative entry
+  transitions.
+- Increased orbit and ticker speeds and added a second visible orbit marker so
+  movement is immediately apparent.
+- Versioned workshop CSS and JavaScript URLs to bypass stale browser caches.
+
 ## Workshop v2.1 - 2026-08-14
 
 ### Changed
