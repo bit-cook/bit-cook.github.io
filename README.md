@@ -9,6 +9,7 @@ Shaun's bilingual personal card (online as BitCook) and the osome.work digital w
 - `/workshop/` - osome.work workshop in Simplified Chinese
 - `/workshop/en/` - osome.work workshop in English
 - `/agentboot/` - Lowercase alias that redirects to the canonical `/AgentBoot/` project homepage
+- `/AgentBoot/` - Canonical bilingual AgentBoot v1.2 project site and verified installers
 - `/assets/` - Shared styles, scripts, and images
 
 ## Local preview
