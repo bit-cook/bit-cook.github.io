@@ -34,8 +34,8 @@ jobs:
           if grep -qF 'window.location.replace' agentboot/index.html; then
             grep -F 'https://osome.work/AgentBoot/' agentboot/index.html
           else
-            # Pages backend may have cached /AgentBoot/; fall back to GitHub Release.
-            grep -F 'github.com/bit-cook/AgentBoot/releases/tag/v1.3.0' agentboot/index.html
+            # /AgentBoot/ subtree may be cached by Pages; alias falls back to project homepage.
+            grep -F 'https://boot.ide.pub/' agentboot/index.html
           fi
           test -f AgentBoot/assets/site.css
           test -f AgentBoot/en/index.html
@@ -63,7 +63,7 @@ jobs:
           if grep -qF 'window.location.replace' agentboot/index.html; then
             grep -F 'https://osome.work/AgentBoot/' agentboot/index.html
           else
-            grep -F 'github.com/bit-cook/AgentBoot/releases/tag/v1.3.0' agentboot/index.html
+            grep -F 'https://boot.ide.pub/' agentboot/index.html
           fi
           test -f AgentBoot/assets/site.css
           test -f AgentBoot/en/index.html
