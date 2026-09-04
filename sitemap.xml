@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://osome.work/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://osome.work/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osome.work/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osome.work/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://osome.work/en/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://osome.work/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osome.work/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osome.work/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://osome.work/workshop/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://osome.work/workshop/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osome.work/workshop/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osome.work/workshop/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://osome.work/workshop/en/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://osome.work/workshop/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osome.work/workshop/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osome.work/workshop/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://osome.work/AgentBoot/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
