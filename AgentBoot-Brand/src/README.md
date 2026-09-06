@@ -30,6 +30,14 @@
 | `site-drop-in/` | 可直接替换官网 `assets/` 的成品 |
 | `brand.html` | 一页式品牌规范（家族/净空/色板/禁例/应用示例） |
 
+## 线上地址
+
+- 品牌站：https://osome.work/AgentBoot-Brand/（大小写不敏感，agentboot-brand 亦可）
+- 修改源仓库：https://github.com/bit-cook/AgentBoot-Brand（agent 克隆改这里，
+  改完把内容同步到 bit-cook.github.io 仓库的 AgentBoot-Brand/ 目录即可秒级上线）
+- 主项目官网：https://bit-cook.github.io/AgentBoot/ = https://osome.work/AgentBoot/
+  （任意大小写均可访问），boot.ide.pub 为 Cloudflare 加速镜像
+
 ## 上线替换（官网）
 
 1. `site-drop-in/favicon.svg` → 覆盖 `assets/favicon.svg`
