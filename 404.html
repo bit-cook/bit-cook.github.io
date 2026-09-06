@@ -26,5 +26,19 @@
       </section>
     </main>
     <script src="/assets/js/main.js" defer></script>
-  </body>
+  <script>
+  (function () {
+    var KNOWN = { agentboot: "AgentBoot", "agentboot-brand": "AgentBoot-Brand" };
+    var segs = location.pathname.split("/");
+    var head = (segs[1] || "").toLowerCase();
+    if (KNOWN[head]) {
+      var rest = segs.slice(2).map(function (s) { return s.toLowerCase(); });
+      var target = "/" + KNOWN[head] + "/" + rest.join("/") + location.search + location.hash;
+      if (target !== location.pathname + location.search + location.hash) {
+        location.replace(target);
+      }
+    }
+  })();
+</script>
+</body>
 </html>
