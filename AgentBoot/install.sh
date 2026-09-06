@@ -244,3 +244,4 @@ if [ -n "$PY" ] && [ -e /dev/tty ] && [ -t 2 ]; then
         *) exec "$PY" "${APP_DIR}/core/menu.py" ;;
     esac
 fi
+# v1.3.0 mirror cache-buster: do not remove

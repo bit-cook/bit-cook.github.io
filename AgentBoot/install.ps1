@@ -1,5 +1,6 @@
-﻿# =============================================================
+# =============================================================
 #  AgentBoot 在线一键安装（Windows 10/11，兼容 PowerShell 3+）
+#  v1.3.0 mirror cache-buster: do not remove
 #  用法（CMD）：
 #    powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object Net.WebClient).DownloadString('https://boot.ide.pub/install.ps1'))"
 #  行为：下载在线包 → 安装到 %LOCALAPPDATA%\AgentBoot → 生成 agentboot / ab 命令
