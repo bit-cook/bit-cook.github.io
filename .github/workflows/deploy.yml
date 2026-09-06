@@ -31,9 +31,12 @@ jobs:
         shell: bash
         run: |
           test ! -e agentboot
-          test ! -e AgentBoot
+          test -f AgentBoot/index.html
+          grep -F 'og:image' AgentBoot/index.html
           grep -F 'agentboot-brand' 404.html
           grep -F 'location.replace' 404.html
+          test -f AgentBoot-Brand/index.html
+          test -f AgentBoot-Brand/svg/logo-mark.svg
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
@@ -51,6 +54,9 @@ jobs:
       - name: Verify AgentBoot homepage aliases
         run: |
           test ! -e agentboot
-          test ! -e AgentBoot
+          test -f AgentBoot/index.html
+          grep -F 'og:image' AgentBoot/index.html
           grep -F 'agentboot-brand' 404.html
           grep -F 'location.replace' 404.html
+          test -f AgentBoot-Brand/index.html
+          test -f AgentBoot-Brand/svg/logo-mark.svg
