@@ -30,15 +30,10 @@ jobs:
       - name: Verify AgentBoot homepage aliases
         shell: bash
         run: |
-          test -f agentboot/index.html
-          grep -F 'https://boot.ide.pub/' agentboot/index.html
-          test -f AgentBoot/index.html
-          grep -F 'https://boot.ide.pub/' AgentBoot/index.html
-          test -f AgentBoot/assets/site.css
-          test -f AgentBoot/en/index.html
-          grep -F 'v1.3.0' AgentBoot/install.sh
-          grep -F "v1.3.0" AgentBoot/install.ps1
-          (cd AgentBoot && sha256sum -c agentboot-online-v1.3.0.tar.gz.sha256 agentboot-online-v1.3.0.zip.sha256)
+          test ! -e agentboot
+          test ! -e AgentBoot
+          grep -F 'agentboot-brand' 404.html
+          grep -F 'location.replace' 404.html
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
@@ -55,12 +50,7 @@ jobs:
           persist-credentials: false
       - name: Verify AgentBoot homepage aliases
         run: |
-          test -f agentboot/index.html
-          grep -F 'https://boot.ide.pub/' agentboot/index.html
-          test -f AgentBoot/index.html
-          grep -F 'https://boot.ide.pub/' AgentBoot/index.html
-          test -f AgentBoot/assets/site.css
-          test -f AgentBoot/en/index.html
-          grep -F 'v1.3.0' AgentBoot/install.sh
-          grep -F "v1.3.0" AgentBoot/install.ps1
-          (cd AgentBoot && sha256sum -c agentboot-online-v1.3.0.tar.gz.sha256 agentboot-online-v1.3.0.zip.sha256)
+          test ! -e agentboot
+          test ! -e AgentBoot
+          grep -F 'agentboot-brand' 404.html
+          grep -F 'location.replace' 404.html
