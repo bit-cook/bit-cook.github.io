@@ -53,7 +53,8 @@
     }
     if (proj) {
       var rest = segs.slice(2).map(function (s) { return s.toLowerCase(); });
-      var target = "/" + proj + "/" + rest.join("/") + location.search + location.hash;
+            var base = "";
+      var target = base + "/" + proj + "/" + rest.join("/") + location.search + location.hash;
       if (target !== location.pathname + location.search + location.hash) {
         location.replace(target);
       }
