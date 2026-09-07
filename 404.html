@@ -29,11 +29,31 @@
   <script>
   (function () {
     var KNOWN = { agentboot: "AgentBoot", "agentboot-brand": "AgentBoot-Brand" };
+    function lev(a, b) {
+      var m = a.length, n = b.length, i, j, prev, cur;
+      if (!m) return n; if (!n) return m;
+      prev = [];
+      for (j = 0; j <= n; j++) prev[j] = j;
+      for (i = 1; i <= m; i++) {
+        cur = [i];
+        for (j = 1; j <= n; j++) {
+          cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        }
+        prev = cur;
+      }
+      return prev[n];
+    }
     var segs = location.pathname.split("/");
     var head = (segs[1] || "").toLowerCase();
-    if (KNOWN[head]) {
+    var proj = KNOWN[head];
+    if (!proj && head.length >= 8) {
+      for (var k in KNOWN) {
+        if (lev(head, k) <= 2) { proj = KNOWN[k]; break; }
+      }
+    }
+    if (proj) {
       var rest = segs.slice(2).map(function (s) { return s.toLowerCase(); });
-      var target = "/" + KNOWN[head] + "/" + rest.join("/") + location.search + location.hash;
+      var target = "/" + proj + "/" + rest.join("/") + location.search + location.hash;
       if (target !== location.pathname + location.search + location.hash) {
         location.replace(target);
       }
