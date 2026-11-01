@@ -9,13 +9,27 @@
 set -eu
 
 REPO="bit-cook/AgentBoot"
-TAG="v1.4.3"
+TAG="v1.7.0"
 TARBALL="agentboot-online-${TAG}.tar.gz"
 BOOT_BASE="https://boot.ide.pub"
 GH="https://github.com/${REPO}/releases/download/${TAG}"
 AB_ROOT="${HOME}/.agentboot"
 APP_DIR="${AB_ROOT}/app"
+# launcher 目录：优先 /usr/local/bin——它默认就在所有 shell 的 PATH 上，
+# 装完当前终端立即可用，不需要 source ~/.bashrc（一键安装体验的关键）。
+# root 直接可写；非 root 但有 passwordless sudo 时借 sudo 落盘（-n 非交互，
+# 绝不弹密码提示）；两者都不满足退回 ~/.local/bin，由 PATH 注册写 shell
+# 配置兜底（Debian/Ubuntu 的 ~/.profile 会为新登录 shell 加上它）。
 BIN_DIR="${HOME}/.local/bin"
+BIN_SUDO=""
+if [ -d /usr/local/bin ] && [ -w /usr/local/bin ]; then
+    BIN_DIR="/usr/local/bin"
+elif [ -d /usr/local/bin ] && command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+    BIN_DIR="/usr/local/bin"
+    BIN_SUDO="sudo -n"
+fi
+# 所有可能的旧 launcher 位置（版本间目录选择变化时清理，防止旧版挡住新版）
+STALE_BIN_DIRS="${HOME}/.local/bin /usr/local/bin"
 
 say()  { printf '%s\n' "$*"; }
 ok()   { printf '✓ %s\n' "$*"; }
@@ -175,9 +189,43 @@ chmod +x "${APP_DIR}/install.sh" 2>/dev/null || true
 
 # ---------- 3. 生成命令行入口 ----------
 step "创建命令：agentboot（控制台） / ab（内置 Agent）"
-mkdir -p "$BIN_DIR"
-agentboot_tmp="${BIN_DIR}/.agentboot.new.$$"
-ab_tmp="${BIN_DIR}/.ab.new.$$"
+# 落盘前探写：BIN_DIR 选择阶段的 -w / sudo -n 推断可能失灵（只读挂载、
+# immutable 目录、LSM 拦截等），探写失败即回落到 ~/.local/bin，
+# 绝不在应用已落盘后卡死在"创建命令"这一步（半安装脏状态）。
+probe_bin_dir() {
+    _probe="${BIN_DIR}/.ab_probe.$$"
+    if [ -n "$BIN_SUDO" ]; then
+        $BIN_SUDO touch "$_probe" 2>/dev/null || return 1
+        $BIN_SUDO rm -f "$_probe" 2>/dev/null || true
+    else
+        touch "$_probe" 2>/dev/null || return 1
+        rm -f "$_probe" 2>/dev/null || true
+    fi
+    return 0
+}
+if ! probe_bin_dir; then
+    if [ "$BIN_DIR" != "${HOME}/.local/bin" ]; then
+        err "无法写入 ${BIN_DIR}，回落到 ~/.local/bin"
+        BIN_DIR="${HOME}/.local/bin"
+        BIN_SUDO=""
+    fi
+    mkdir -p "$BIN_DIR" || { err "无法创建 ${BIN_DIR}，请手动安装"; exit 1; }
+    if ! probe_bin_dir; then
+        err "无法写入 ${BIN_DIR}，请检查权限后重试"
+        exit 1
+    fi
+    ok "命令入口将安装到 ${BIN_DIR}"
+fi
+# 临时文件与目标同目录（可写时）——保证 mv 原子替换；sudo 场景用 mktemp + sudo install
+# mktemp 尊重 $TMPDIR，其不可写时回退 /tmp（与下载临时目录同款容错）
+if [ -n "$BIN_SUDO" ]; then
+    TMP_BASE="$(mktemp -d 2>/dev/null || mktemp -d -p /tmp 2>/dev/null || echo "/tmp/agentboot-launcher-$$")"
+    trap 'rm -rf "$TMP_BASE"' EXIT
+else
+    TMP_BASE="$BIN_DIR"
+fi
+agentboot_tmp="${TMP_BASE}/.agentboot.new.$$"
+ab_tmp="${TMP_BASE}/.ab.new.$$"
 rm -f "$agentboot_tmp" "$ab_tmp"
 cat > "$agentboot_tmp" <<EOF
 #!/bin/sh
@@ -192,32 +240,77 @@ PYTHON="\$(command -v python3 || command -v python)"
 exec "\$PYTHON" "\$HOME/.agentboot/app/core/launch.py" agent "\$@"
 EOF
 chmod +x "$agentboot_tmp" "$ab_tmp"
-mv -f "$agentboot_tmp" "${BIN_DIR}/agentboot"
-mv -f "$ab_tmp" "${BIN_DIR}/ab"
+# 落盘：拒绝符号链接；可直接写则同目录 mv（原子）；sudo 场景经 sudo install
+install_launcher() {
+    launcher="${BIN_DIR}/$2"
+    if [ -L "$launcher" ]; then
+        err "拒绝写入：$launcher 是符号链接"
+        return 1
+    fi
+    if [ -n "$BIN_SUDO" ]; then
+        $BIN_SUDO install -m 755 "$1" "$launcher"
+    else
+        mv -f "$1" "$launcher"
+    fi
+}
+# 命令入口创建失败时回滚：升级则恢复旧版，新装则撤掉刚落地的应用，
+# 杜绝"应用在、命令无"的半安装脏状态（重跑安装器即可自愈）
+rollback_install() {
+    if [ -d "$OLD_APP" ]; then
+        rm -rf "$APP_DIR"
+        mv "$OLD_APP" "$APP_DIR"
+    elif [ "${SWAP_COMMITTED:-0}" != "1" ]; then
+        rm -rf "$APP_DIR"
+    fi
+}
+install_launcher "$agentboot_tmp" agentboot || { rollback_install; err "写入 launcher 失败：${BIN_DIR}/agentboot"; exit 1; }
+install_launcher "$ab_tmp" ab || { rollback_install; err "写入 launcher 失败：${BIN_DIR}/ab"; exit 1; }
 SWAP_COMMITTED=1
 rm -rf "$OLD_APP"
+# 清理另一处位置的旧 launcher（只删 AgentBoot 自己的：内容指向 launch.py）
+for stale_dir in $STALE_BIN_DIRS; do
+    [ "$stale_dir" = "$BIN_DIR" ] && continue
+    for stale_bin in agentboot ab; do
+        stale_path="$stale_dir/$stale_bin"
+        if [ -f "$stale_path" ] && grep -q "launch.py" "$stale_path" 2>/dev/null; then
+            rm -f "$stale_path" 2>/dev/null && say "· 清理旧位置 launcher：$stale_path"
+        fi
+    done
+done
 ok "已写入 ${BIN_DIR}"
 
 # ---------- 4. PATH 注册（幂等） ----------
+# 注意：rc 文件不存在时必须先创建再追加——早期版本用 [ -f "$rc" ] 判断，
+# 在新系统（root 无 ~/.bashrc）上会静默跳过，导致装完 agentboot 找不到命令。
 case ":$PATH:" in
     *":${BIN_DIR}:"*) ;;
     *)
         BLOCK="# >>> agentboot >>>"
         for rc in "${HOME}/.bashrc" "${HOME}/.profile"; do
-            if [ -f "$rc" ] && ! grep -q "$BLOCK" "$rc" 2>/dev/null; then
-                { echo ''; echo "$BLOCK";
-                  echo 'for _d in "$HOME/.local/bin" "$HOME/.agentboot/bin"; do'
-                  echo '  [ -d "$_d" ] && case ":$PATH:" in *":$_d:"*) ;; *) export PATH="$_d:$PATH";; esac'
-                  echo 'done'; echo 'unset _d'; } >> "$rc"
+            [ -d "$HOME" ] || continue
+            grep -q "$BLOCK" "$rc" 2>/dev/null && continue
+            [ -f "$rc" ] || : > "$rc" 2>/dev/null || { err "无法创建 $rc，PATH 需手动配置"; continue; }
+            if { echo ''; echo "$BLOCK";
+                 echo 'for _d in "$HOME/.local/bin" "$HOME/.agentboot/bin"; do'
+                 echo '  [ -d "$_d" ] && case ":$PATH:" in *":$_d:"*) ;; *) export PATH="$_d:$PATH";; esac'
+                 echo 'done'; echo 'unset _d'; } >> "$rc" 2>/dev/null; then
                 ok "PATH 已写入 $rc（重开终端生效）"
+            else
+                err "无法写入 $rc，请手动把 ${BIN_DIR} 加入 PATH"
             fi
         done
-        if [ -f "${HOME}/.zshrc" ] && ! grep -q "$BLOCK" "${HOME}/.zshrc" 2>/dev/null; then
-            { echo ''; echo "$BLOCK";
-              echo 'for _d in "$HOME/.local/bin" "$HOME/.agentboot/bin"; do'
-              echo '  [ -d "$_d" ] && case ":$PATH:" in *":$_d:"*) ;; *) export PATH="$_d:$PATH";; esac'
-              echo 'done'; echo 'unset _d'; } >> "${HOME}/.zshrc"
-            ok "PATH 已写入 ~/.zshrc（重开终端生效）"
+        if ! grep -q "$BLOCK" "${HOME}/.zshrc" 2>/dev/null; then
+            [ -d "$HOME" ] || HOME_ZSHRC_SKIP=1
+            if [ -z "${HOME_ZSHRC_SKIP:-}" ]; then
+                [ -f "${HOME}/.zshrc" ] || : > "${HOME}/.zshrc" 2>/dev/null || true
+                if [ -f "${HOME}/.zshrc" ]; then
+                    { echo ''; echo "$BLOCK";
+                      echo 'for _d in "$HOME/.local/bin" "$HOME/.agentboot/bin"; do'
+                      echo '  [ -d "$_d" ] && case ":$PATH:" in *":$_d:"*) ;; *) export PATH="$_d:$PATH";; esac'
+                      echo 'done'; echo 'unset _d'; } >> "${HOME}/.zshrc" 2>/dev/null \
+                        && ok "PATH 已写入 ~/.zshrc（重开终端生效）" || true
+                fi
+            fi
         fi
         ;;
 esac
@@ -230,18 +323,42 @@ step "环境体检"
 say ""
 say "=============================================="
 ok  "AgentBoot 安装完成！"
-say "  控制台菜单 : agentboot"
-say "  内置 Agent : ab      （默认 Agnes 免费模型，直接可用）"
-say "  安装其他 Agent：运行 agentboot → 选 [2] 在线安装"
-say "  当前终端立即生效：export PATH=\"${BIN_DIR}:\$PATH\""
+say ""
+say "  如何启动："
+say "    控制台菜单 : agentboot        （装/卸 Agent、镜像、模型配置）"
+say "    内置 Agent : ab              （直接对话，默认 Groq qwen/qwen3.8-27b）"
+say "    安装其他 Agent：运行 agentboot → 选 [2] 在线安装"
+say ""
+say "  模型说明：ab 默认用 Groq（qwen/qwen3.8-27b，极速推理）；未配置 Groq"
+say "  API Key 时自动改用 Agnes 免费模型备选，两种方式都能直接对话。"
+say ""
+case ":$PATH:" in
+    *":${BIN_DIR}:"*)
+        say "  ✓ ${BIN_DIR} 已在 PATH 中——当前终端直接输入 agentboot 即可启动，"
+        say "    无需 source、无需重开终端。"
+        ;;
+    *)
+        if grep -q "# >>> agentboot >>>" "${HOME}/.bashrc" 2>/dev/null; then
+            say "  PATH 已写入 ~/.bashrc。当前终端立即生效请执行："
+            say "      source ~/.bashrc"
+            say "  或者直接关掉本终端、重开一个（新终端自动生效）。"
+        else
+            say "  未能自动写入 shell 配置。当前终端立即生效请执行："
+            say "      export PATH=\"${BIN_DIR}:\$PATH\""
+            say "  并建议把上面这行追加到 ~/.bashrc，以后新终端自动生效。"
+        fi
+        ;;
+esac
 say "=============================================="
 
-# 交互终端时询问是否直接打开菜单
+# 交互终端时询问是否直接打开菜单。
+# 注意：curl | sh 安装时本脚本的 stdin 是已耗尽的管道，菜单必须改从
+# /dev/tty 读输入，否则菜单一启动就遇到 EOF 直接退出（实测踩过）。
 if [ -n "$PY" ] && [ -e /dev/tty ] && [ -t 2 ]; then
     printf '是否现在打开控制台菜单? [Y/n] '
     read ans < /dev/tty || ans="n"
     case "$ans" in
-        n|N|no|NO) ;;
-        *) exec "$PY" "${APP_DIR}/core/menu.py" ;;
+        n|N|no|NO) say "下次输入 agentboot 即可打开控制台。" ;;
+        *) exec "$PY" "${APP_DIR}/core/menu.py" < /dev/tty ;;
     esac
 fi
